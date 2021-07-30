@@ -1,0 +1,117 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://planet.png" type="Texture" id=1]
+[ext_resource path="res://satellite.png" type="Texture" id=2]
+[ext_resource path="res://Plus.png" type="Texture" id=3]
+[ext_resource path="res://Changer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://From.gd" type="Script" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Idle"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("satellite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 609.497, 290 ), Vector2( 609.497, 310 ), Vector2( 609.497, 290 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("planet:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 360, 290 ), Vector2( 360, 310 ), Vector2( 360, 290 ) ]
+}
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+uniform vec4 in_color:hint_color;
+uniform vec4 out_color:hint_color;
+
+uniform float in_out:hint_range(0.,1.)=0.;
+
+uniform float position:hint_range(-1.5,1.) = 0.856;
+uniform vec2 size = vec2(16., 16.);
+
+void fragment(){
+	vec2 a = (1./SCREEN_PIXEL_SIZE) / size;
+	
+    vec2 uv=UV;
+	uv *= a;
+    
+    vec2 i_uv = floor(uv);
+    vec2 f_uv = fract(uv);
+    
+    float wave = max(0.,i_uv.x/(a.x) - position);
+    
+    vec2 center = f_uv*2.-1.;
+	float circle = length(center);
+    circle = 1. - step(wave,circle);
+    
+	vec4 color = mix(in_color, out_color, step(0.5, in_out));
+	
+    COLOR=vec4(circle) * color;
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/in_color = Color( 0, 1, 0.352941, 1 )
+shader_param/out_color = Color( 1, 0.882353, 0, 1 )
+shader_param/in_out = 0.984
+shader_param/position = 1.0
+shader_param/size = Vector2( 30, 30 )
+
+[node name="From" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Background" type="CanvasLayer" parent="Node"]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Node/Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.180392, 0.8, 0.443137, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="satellite" type="Sprite" parent="."]
+position = Vector2( 609.497, 302.961 )
+scale = Vector2( 0.05, 0.05 )
+z_index = 2
+texture = ExtResource( 2 )
+
+[node name="planet" type="Sprite" parent="."]
+position = Vector2( 360, 301.265 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 1 )
+
+[node name="Plus" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.247059 )
+position = Vector2( 512, 300 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Idle"
+anims/Idle = SubResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Changer" parent="CanvasLayer" instance=ExtResource( 4 )]
+material = SubResource( 3 )
+next_scene = "res://Result.tscn"
