@@ -41,9 +41,11 @@ void fragment(){
 ### Variables explain:
 
 **In Color** is the color of transition in effect
+
 **Out Color** is the color of transition out effect
 
 **In Out** set which color to pick, If the value greater than 0.5. The color will be Out color otherwise it will be the In color.
 
 **Position** the a slide from -1.5 to 1 if it set to 1, whole screen will be reveal. If it -1.5, whole screen will be cover.
+
 **Size** size of circles
