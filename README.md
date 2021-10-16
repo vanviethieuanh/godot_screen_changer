@@ -49,3 +49,7 @@ void fragment(){
 **Position** the a slide from -1.5 to 1 if it set to 1, whole screen will be reveal. If it -1.5, whole screen will be cover.
 
 **Size** size of circles
+
+----
+
+😊 Feel free to use it in your project, credit if you want to. I'm not give this a licence because this contain some graphics stuffs that I only want to be use for education purposes
