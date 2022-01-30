@@ -9,7 +9,8 @@ uniform float position:hint_range(-1.5,1.) = 0.856;
 uniform vec2 size = vec2(16., 16.);
 
 void fragment(){
-	vec2 a = (1./SCREEN_PIXEL_SIZE) / size;
+    // (1/PIXEL_SIZE) -> will return the size on pixel, devide by the size of each circle will get the amount of circle
+    vec2 a = (1./SCREEN_PIXEL_SIZE) / size;
 	
     vec2 uv=UV;
 	uv *= a;
