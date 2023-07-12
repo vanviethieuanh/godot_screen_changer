@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
-uniform vec4 in_color:hint_color;
-uniform vec4 out_color:hint_color;
+uniform vec4 in_color:source_color;
+uniform vec4 out_color:source_color;
 
 uniform float in_out:hint_range(0.,1.)=0.;
 
