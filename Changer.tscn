@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://byce3pp87q24x"]
 
-[ext_resource path="res://Changer.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://Changer.gd" id="1"]
 
-[sub_resource type="Shader" id=2]
+[sub_resource type="Shader" id="2"]
 code = "shader_type canvas_item;
 
 uniform vec4 in_color:source_color;
@@ -33,21 +33,17 @@ void fragment(){
     COLOR=vec4(circle) * color;
 }"
 
-[sub_resource type="ShaderMaterial" id=1]
-shader = SubResource( 2 )
-shader_param/in_color = Color( 1, 0.882353, 0, 1 )
-shader_param/out_color = Color( 0.988235, 0.317647, 0.317647, 1 )
-shader_param/in_out = 0.984
-shader_param/position = 1.0
-shader_param/size = Vector2( 30, 30 )
+[sub_resource type="ShaderMaterial" id="1"]
+shader = SubResource("2")
+shader_parameter/in_color = Color(1, 0.882353, 0, 1)
+shader_parameter/out_color = Color(0.988235, 0.317647, 0.317647, 1)
+shader_parameter/in_out = 0.984
+shader_parameter/position = 1.0
+shader_parameter/size = Vector2(30, 30)
 
 [node name="Changer" type="ColorRect"]
-material = SubResource( 1 )
+material = SubResource("1")
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Tween" type="Tween" parent="."]
+script = ExtResource("1")

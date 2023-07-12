@@ -1,40 +1,44 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=3 uid="uid://f26u02ixwm32"]
 
-[ext_resource path="res://planet.png" type="Texture2D" id=1]
-[ext_resource path="res://satellite.png" type="Texture2D" id=2]
-[ext_resource path="res://Plus.png" type="Texture2D" id=3]
-[ext_resource path="res://Changer.tscn" type="PackedScene" id=4]
-[ext_resource path="res://From.gd" type="Script" id=5]
+[ext_resource type="Texture2D" uid="uid://di4e66q4jq7wo" path="res://planet.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://bl2cp0pl5ynq6" path="res://satellite.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://caqlrpx2ylpf6" path="res://Plus.png" id="3"]
+[ext_resource type="PackedScene" uid="uid://byce3pp87q24x" path="res://Changer.tscn" id="4"]
+[ext_resource type="Script" path="res://From.gd" id="5"]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id="1"]
 resource_name = "Idle"
-loop = true
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("satellite:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0, 0.5, 1 ),
-"transitions": PackedFloat32Array( 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [ Vector2( 609.497, 290 ), Vector2( 609.497, 310 ), Vector2( 609.497, 290 ) ]
+"values": [Vector2(609.497, 290), Vector2(609.497, 310), Vector2(609.497, 290)]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("planet:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PackedFloat32Array( 0, 0.5, 1 ),
-"transitions": PackedFloat32Array( 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [ Vector2( 360, 290 ), Vector2( 360, 310 ), Vector2( 360, 290 ) ]
+"values": [Vector2(360, 290), Vector2(360, 310), Vector2(360, 290)]
 }
 
-[sub_resource type="Shader" id=2]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hbohb"]
+_data = {
+"Idle": SubResource("1")
+}
+
+[sub_resource type="Shader" id="2"]
 code = "shader_type canvas_item;
 
 uniform vec4 in_color:source_color;
@@ -65,16 +69,16 @@ void fragment(){
     COLOR=vec4(circle) * color;
 }"
 
-[sub_resource type="ShaderMaterial" id=3]
-shader = SubResource( 2 )
-shader_param/in_color = Color( 0, 1, 0.352941, 1 )
-shader_param/out_color = Color( 1, 0.882353, 0, 1 )
-shader_param/in_out = 0.984
-shader_param/position = 1.0
-shader_param/size = Vector2( 30, 30 )
+[sub_resource type="ShaderMaterial" id="3"]
+shader = SubResource("2")
+shader_parameter/in_color = Color(0, 1, 0.352941, 1)
+shader_parameter/out_color = Color(1, 0.882353, 0, 1)
+shader_parameter/in_out = 1.0
+shader_parameter/position = 1.0
+shader_parameter/size = Vector2(30, 30)
 
 [node name="From" type="Node2D"]
-script = ExtResource( 5 )
+script = ExtResource("5")
 
 [node name="Node" type="Node" parent="."]
 
@@ -82,36 +86,36 @@ script = ExtResource( 5 )
 layer = -1
 
 [node name="ColorRect" type="ColorRect" parent="Node/Background"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.180392, 0.8, 0.443137, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+color = Color(0.180392, 0.8, 0.443137, 1)
 
 [node name="satellite" type="Sprite2D" parent="."]
-position = Vector2( 609.497, 302.961 )
-scale = Vector2( 0.05, 0.05 )
 z_index = 2
-texture = ExtResource( 2 )
+position = Vector2(609.497, 302.961)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2")
 
 [node name="planet" type="Sprite2D" parent="."]
-position = Vector2( 360, 301.265 )
-scale = Vector2( 0.05, 0.05 )
-texture = ExtResource( 1 )
+position = Vector2(360, 301.265)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("1")
 
 [node name="Plus" type="Sprite2D" parent="."]
-modulate = Color( 1, 1, 1, 0.247059 )
-position = Vector2( 512, 300 )
-scale = Vector2( 0.05, 0.05 )
-texture = ExtResource( 3 )
+modulate = Color(1, 1, 1, 0.247059)
+position = Vector2(512, 300)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
-anims/Idle = SubResource( 1 )
+libraries = {
+"": SubResource("AnimationLibrary_hbohb")
+}
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Changer" parent="CanvasLayer" instance=ExtResource( 4 )]
-material = SubResource( 3 )
+[node name="Changer" parent="CanvasLayer" instance=ExtResource("4")]
+material = SubResource("3")
 next_scene = "res://Result.tscn"

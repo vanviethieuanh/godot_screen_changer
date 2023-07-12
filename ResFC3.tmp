@@ -1,15 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://l48siwkhtuga"]
+[gd_scene load_steps=7 format=3 uid="uid://l48siwkhtuga"]
 
 [ext_resource type="Texture2D" uid="uid://di4e66q4jq7wo" path="res://planet.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://bl2cp0pl5ynq6" path="res://satellite.png" id="2"]
-[ext_resource type="PackedScene" uid="uid://byce3pp87q24x" path="res://Changer.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://Changer.tscn" id="3"]
 [ext_resource type="Script" path="res://Result.gd" id="4"]
-[ext_resource type="Shader" path="res://Changer.gdshader" id="5_7f4fm"]
 
 [sub_resource type="Animation" id="1"]
 resource_name = "Rotate"
 length = 2.0
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -40,14 +38,6 @@ _data = {
 "Rotate": SubResource("1")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yifvs"]
-shader = ExtResource("5_7f4fm")
-shader_parameter/in_color = Color(0.996094, 0.878906, 0, 1)
-shader_parameter/out_color = Color(0.984375, 0.316406, 0.316406, 1)
-shader_parameter/in_out = 0.0
-shader_parameter/position = 1.0
-shader_parameter/size = Vector2(16, 16)
-
 [node name="Result" type="Node2D"]
 script = ExtResource("4")
 
@@ -63,7 +53,7 @@ anchor_bottom = 1.0
 color = Color(0.988235, 0.317647, 0.317647, 1)
 
 [node name="satellite" type="Sprite2D" parent="."]
-position = Vector2(612, 400)
+position = Vector2(413.894, 201.894)
 scale = Vector2(0.05, 0.05)
 texture = ExtResource("2")
 
@@ -82,7 +72,4 @@ libraries = {
 layer = 10
 
 [node name="Changer" parent="CanvasLayer" instance=ExtResource("3")]
-material = SubResource("ShaderMaterial_yifvs")
-grow_horizontal = 2
-grow_vertical = 2
-next_scene = "res://From.tscn"
+anchors_preset = 15
